@@ -4,7 +4,6 @@ import 'package:reorderable_grid_view/src/sliver_grid_with_reorderable_pos_deleg
 
 import '../reorderable_grid_view.dart';
 
-
 class ReorderableSliverGridView extends StatelessWidget {
   final List<Widget> children;
   final int crossAxisCount;
@@ -25,39 +24,37 @@ class ReorderableSliverGridView extends StatelessWidget {
     required this.mainAxisSpacing,
     required this.crossAxisSpacing,
     required this.childAspectRatio,
-
     required this.onReorder,
     this.dragWidgetBuilder,
     this.scrollSpeedController,
     this.placeholderBuilder,
     this.onDragStart,
-  }): super(key: key);
+  }) : super(key: key);
 
   const ReorderableSliverGridView.count({
     Key? key,
     required int crossAxisCount,
     required ReorderCallback onReorder,
     OnDragStart? onDragStart,
-
     double mainAxisSpacing = 0.0,
     double crossAxisSpacing = 0.0,
     double childAspectRatio = 1.0,
     children = const <Widget>[],
-  }): this(
-    key: key,
-    onReorder: onReorder,
-    children: children,
-    crossAxisCount: crossAxisCount,
-    mainAxisSpacing: mainAxisSpacing,
-    crossAxisSpacing: crossAxisSpacing,
-    childAspectRatio: childAspectRatio,
-    onDragStart: onDragStart
-  );
+  }) : this(
+            key: key,
+            onReorder: onReorder,
+            children: children,
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: mainAxisSpacing,
+            crossAxisSpacing: crossAxisSpacing,
+            childAspectRatio: childAspectRatio,
+            onDragStart: onDragStart);
 
   @override
   Widget build(BuildContext context) {
-    var child = SliverGridWithReorderablePosDelegate.count(key: key,
-        children: ReorderableItemView.wrapMeList(children, []),
+    var child = SliverGridWithReorderablePosDelegate.count(
+        key: key,
+        children: ReorderableItemView.wrapMeList(children, [], []),
         crossAxisCount: crossAxisCount,
         mainAxisSpacing: mainAxisSpacing,
         crossAxisSpacing: crossAxisSpacing,
@@ -71,7 +68,5 @@ class ReorderableSliverGridView extends StatelessWidget {
       placeholderBuilder: placeholderBuilder,
       onDragStart: onDragStart,
     );
-
   }
-
 }
