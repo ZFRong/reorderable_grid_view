@@ -25,7 +25,8 @@ typedef ScrollSpeedController = double Function(
     int timeInMilliSecond, double overSize, double itemSize);
 
 /// build the target placeholder
-typedef PlaceholderBuilder = Widget Function(int dropIndex, int dropInddex, Widget dragWidget);
+typedef PlaceholderBuilder = Widget Function(
+    int dropIndex, int dropInddex, Widget dragWidget);
 
 /// The drag and drop life cycle.
 typedef OnDragStart = void Function(int dragIndex);
@@ -50,6 +51,7 @@ typedef OnDragStart = void Function(int dragIndex);
 /// constraint, and that method look called by the framework.
 /// So I need the crossAxisCount, spacing to determine the pos.
 class ReorderableGridView extends StatelessWidget {
+  final List<Widget>? header;
   final List<Widget>? footer;
   final ReorderCallback onReorder;
   final DragWidgetBuilder? dragWidgetBuilder;
@@ -82,8 +84,8 @@ class ReorderableGridView extends StatelessWidget {
     DragWidgetBuilder? dragWidgetBuilder,
     PlaceholderBuilder? placeholderBuilder,
     OnDragStart? onDragStart,
+    List<Widget>? header,
     List<Widget>? footer,
-
     bool reverse = false,
     ScrollController? controller,
     bool? primary,
@@ -99,45 +101,47 @@ class ReorderableGridView extends StatelessWidget {
     double? cacheExtent,
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
-  }): this(
-    key: key,
-    onReorder: onReorder,
-    dragWidgetBuilder: dragWidgetBuilder,
-    scrollSpeedController: scrollSpeedController,
-    placeholderBuilder: placeholderBuilder,
-    onDragStart: onDragStart,
-    footer: footer,
+  }) : this(
+          key: key,
+          onReorder: onReorder,
+          dragWidgetBuilder: dragWidgetBuilder,
+          scrollSpeedController: scrollSpeedController,
+          placeholderBuilder: placeholderBuilder,
+          onDragStart: onDragStart,
+          header: header,
+          footer: footer,
 
-    // how to determine the
-    childrenDelegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-        Widget child = itemBuilder(context, index);
-        return ReorderableItemView(child: child, key: child.key!, index: index);
-      },
-      childCount: itemCount,
-      addAutomaticKeepAlives: addAutomaticKeepAlives,
-      addRepaintBoundaries: addRepaintBoundaries,
-      addSemanticIndexes: addSemanticIndexes,
-    ),
+          // how to determine the
+          childrenDelegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              Widget child = itemBuilder(context, index);
+              return ReorderableItemView(
+                  child: child, key: child.key!, index: index);
+            },
+            childCount: itemCount,
+            addAutomaticKeepAlives: addAutomaticKeepAlives,
+            addRepaintBoundaries: addRepaintBoundaries,
+            addSemanticIndexes: addSemanticIndexes,
+          ),
 
-    gridDelegate: gridDelegate,
-    reverse: reverse,
-    controller: controller,
-    primary: primary,
-    physics: physics,
-    shrinkWrap: shrinkWrap,
-    padding: padding,
-    cacheExtent: cacheExtent,
-    semanticChildCount: semanticChildCount ?? itemCount,
-    dragStartBehavior: dragStartBehavior,
-    keyboardDismissBehavior: keyboardDismissBehavior,
-    restorationId: restorationId,
-    clipBehavior: clipBehavior,
-  );
-
+          gridDelegate: gridDelegate,
+          reverse: reverse,
+          controller: controller,
+          primary: primary,
+          physics: physics,
+          shrinkWrap: shrinkWrap,
+          padding: padding,
+          cacheExtent: cacheExtent,
+          semanticChildCount: semanticChildCount ?? itemCount,
+          dragStartBehavior: dragStartBehavior,
+          keyboardDismissBehavior: keyboardDismissBehavior,
+          restorationId: restorationId,
+          clipBehavior: clipBehavior,
+        );
 
   ReorderableGridView.count({
     Key? key,
@@ -146,12 +150,11 @@ class ReorderableGridView extends StatelessWidget {
     ScrollSpeedController? scrollSpeedController,
     PlaceholderBuilder? placeholderBuilder,
     OnDragStart? onDragStart,
+    List<Widget>? header,
     List<Widget>? footer,
-
     double mainAxisSpacing = 0.0,
     double crossAxisSpacing = 0.0,
     double childAspectRatio = 1.0,
-
     bool reverse = false,
     ScrollController? controller,
     bool? primary,
@@ -166,44 +169,44 @@ class ReorderableGridView extends StatelessWidget {
     List<Widget> children = const <Widget>[],
     int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
-    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
+    ScrollViewKeyboardDismissBehavior keyboardDismissBehavior =
+        ScrollViewKeyboardDismissBehavior.manual,
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
-  }): this(
-    key: key,
-    onReorder: onReorder,
-    dragWidgetBuilder: dragWidgetBuilder,
-    scrollSpeedController: scrollSpeedController,
-    placeholderBuilder: placeholderBuilder,
-    onDragStart: onDragStart,
-    footer: footer,
-
-    childrenDelegate: SliverChildListDelegate(
-      ReorderableItemView.wrapMeList(children, footer),
-      addAutomaticKeepAlives: addAutomaticKeepAlives,
-      addRepaintBoundaries: addRepaintBoundaries,
-      addSemanticIndexes: addSemanticIndexes,
-    ),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: crossAxisCount,
-      mainAxisSpacing: mainAxisSpacing,
-      crossAxisSpacing: crossAxisSpacing,
-      childAspectRatio: childAspectRatio,
-    ),
-
-    reverse: reverse,
-    controller: controller,
-    primary: primary,
-    physics: physics,
-    shrinkWrap: shrinkWrap,
-    padding: padding,
-    cacheExtent: cacheExtent,
-    semanticChildCount: semanticChildCount ?? children.length,
-    dragStartBehavior: dragStartBehavior,
-    keyboardDismissBehavior: keyboardDismissBehavior,
-    restorationId: restorationId,
-    clipBehavior: clipBehavior,
-  );
+  }) : this(
+          key: key,
+          onReorder: onReorder,
+          dragWidgetBuilder: dragWidgetBuilder,
+          scrollSpeedController: scrollSpeedController,
+          placeholderBuilder: placeholderBuilder,
+          onDragStart: onDragStart,
+          header: header,
+          footer: footer,
+          childrenDelegate: SliverChildListDelegate(
+            ReorderableItemView.wrapMeList(children, header, footer),
+            addAutomaticKeepAlives: addAutomaticKeepAlives,
+            addRepaintBoundaries: addRepaintBoundaries,
+            addSemanticIndexes: addSemanticIndexes,
+          ),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: mainAxisSpacing,
+            crossAxisSpacing: crossAxisSpacing,
+            childAspectRatio: childAspectRatio,
+          ),
+          reverse: reverse,
+          controller: controller,
+          primary: primary,
+          physics: physics,
+          shrinkWrap: shrinkWrap,
+          padding: padding,
+          cacheExtent: cacheExtent,
+          semanticChildCount: semanticChildCount ?? children.length,
+          dragStartBehavior: dragStartBehavior,
+          keyboardDismissBehavior: keyboardDismissBehavior,
+          restorationId: restorationId,
+          clipBehavior: clipBehavior,
+        );
 
   ReorderableGridView({
     Key? key,
@@ -211,12 +214,11 @@ class ReorderableGridView extends StatelessWidget {
     this.dragWidgetBuilder,
     this.scrollSpeedController,
     this.placeholderBuilder,
+    this.header,
     this.footer,
     this.onDragStart,
-
     required this.gridDelegate,
     required this.childrenDelegate,
-
     this.reverse = false,
     this.primary,
     this.physics,
@@ -229,7 +231,7 @@ class ReorderableGridView extends StatelessWidget {
     this.clipBehavior = Clip.hardEdge,
     this.controller,
     this.dragStartBehavior = DragStartBehavior.start,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +240,6 @@ class ReorderableGridView extends StatelessWidget {
         key: key,
         gridDelegate: gridDelegate,
         childrenDelegate: childrenDelegate,
-
         controller: controller,
         reverse: reverse,
         primary: primary,
@@ -252,7 +253,6 @@ class ReorderableGridView extends StatelessWidget {
         clipBehavior: clipBehavior,
         dragStartBehavior: dragStartBehavior,
       ),
-
       onReorder: onReorder,
       dragWidgetBuilder: dragWidgetBuilder,
       scrollSpeedController: scrollSpeedController,

@@ -15,8 +15,8 @@ class ReorderableItemView extends StatefulWidget {
     required this.index,
   }) : super(key: key);
 
-  static List<Widget> wrapMeList(List<Widget> children,
-      List<Widget>? footer) {
+  static List<Widget> wrapMeList(
+      List<Widget> children, List<Widget>? header, List<Widget>? footer) {
     var rst = <Widget>[];
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
@@ -26,7 +26,7 @@ class ReorderableItemView extends StatefulWidget {
         index: i,
       ));
     }
-
+    rst.insertAll(0, header ?? []);
     rst.addAll(footer ?? []);
     return rst;
   }
@@ -35,7 +35,8 @@ class ReorderableItemView extends StatefulWidget {
   ReorderableItemViewState createState() => ReorderableItemViewState();
 }
 
-class ReorderableItemViewState extends State<ReorderableItemView> with TickerProviderStateMixin {
+class ReorderableItemViewState extends State<ReorderableItemView>
+    with TickerProviderStateMixin {
   late ReorderableGridStateMixin _listState;
   bool _dragging = false;
   // ths is strange thing.
@@ -58,7 +59,6 @@ class ReorderableItemViewState extends State<ReorderableItemView> with TickerPro
       });
     }
   }
-
 
   /// We can only check the items between startIndex and the targetIndex, but for simply, we check all <= targetDropIndex
   void updateForGap(int dropIndex) {
@@ -118,11 +118,12 @@ class ReorderableItemViewState extends State<ReorderableItemView> with TickerPro
     if (_selfPos != _targetPos) {
       // any better idea?
       setState(() {
-        debug("_buildPlaceHolder for index $index, _offset: $_placeholderOffset, _targetPos: $_targetPos");
-        _placeholderOffset = _listState.getPos(_targetPos) - _listState.getPos(_selfPos);
+        debug(
+            "_buildPlaceHolder for index $index, _offset: $_placeholderOffset, _targetPos: $_targetPos");
+        _placeholderOffset =
+            _listState.getPos(_targetPos) - _listState.getPos(_selfPos);
       });
     }
-
   }
 
   void resetGap() {
@@ -181,7 +182,8 @@ class ReorderableItemViewState extends State<ReorderableItemView> with TickerPro
     }
 
     return Transform(
-      transform: Matrix4.translationValues(_placeholderOffset.dx, _placeholderOffset.dy, 0),
+      transform: Matrix4.translationValues(
+          _placeholderOffset.dx, _placeholderOffset.dy, 0),
       child: _listState.placeholderBuilder!(index, _listState.dropIndex, child),
     );
   }
