@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:reorderable_grid_view/src/reorderable_grid_mixin.dart';
-import 'package:reorderable_grid_view/src/util.dart';
+import 'package:reorderable_grid_view_header/src/reorderable_grid_mixin.dart';
+import 'package:reorderable_grid_view_header/src/util.dart';
 
 /// A child wrapper.
 class ReorderableItemView extends StatefulWidget {

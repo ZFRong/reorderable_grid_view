@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:reorderable_grid_view/reorderable_grid_view.dart';
-import 'package:reorderable_grid_view/src/reorderable_item.dart';
+import 'package:reorderable_grid_view_header/reorderable_grid_view.dart';
+import 'package:reorderable_grid_view_header/src/reorderable_item.dart';
 
 typedef _DragItemUpdate = void Function(
     DragInfo item, Offset position, Offset delta);
@@ -98,9 +98,9 @@ class DragInfo extends Drag {
         child: dragWidgetBuilder != null
             ? dragWidgetBuilder!(index, child)
             : Material(
-          elevation: 3.0,
-          child: child,
-        ),
+                elevation: 3.0,
+                child: child,
+              ),
       ),
     );
   }
@@ -142,7 +142,7 @@ class DragInfo extends Drag {
       bool needScroll = false;
       final ScrollPosition position = scrollable.position;
       final RenderBox scrollRenderBox =
-      scrollable.context.findRenderObject()! as RenderBox;
+          scrollable.context.findRenderObject()! as RenderBox;
 
       final scrollOrigin = scrollRenderBox.localToGlobal(Offset.zero);
       final scrollStart = scrollOrigin.dy;
@@ -188,15 +188,11 @@ class DragInfo extends Drag {
 
       if (needScroll && this.scrollSpeedController != null) {
         if (_scrollBeginTime <= 0) {
-          _scrollBeginTime = DateTime
-              .now()
-              .millisecondsSinceEpoch;
+          _scrollBeginTime = DateTime.now().millisecondsSinceEpoch;
         }
 
         scroll = this.scrollSpeedController!(
-          DateTime
-              .now()
-              .millisecondsSinceEpoch - _scrollBeginTime,
+          DateTime.now().millisecondsSinceEpoch - _scrollBeginTime,
           overSize,
           itemSize.height,
         );

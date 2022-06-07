@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:reorderable_grid_view/src/sliver_grid_with_reorderable_pos_delegate.dart';
+import 'package:reorderable_grid_view_header/src/sliver_grid_with_reorderable_pos_delegate.dart';
 
 import '../reorderable_grid_view.dart';
 

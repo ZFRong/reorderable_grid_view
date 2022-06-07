@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:reorderable_grid_view/src/reorderable_wrapper_widget.dart';
-import 'package:reorderable_grid_view/src/reorderable_item.dart';
+import 'package:reorderable_grid_view_header/src/reorderable_wrapper_widget.dart';
+import 'package:reorderable_grid_view_header/src/reorderable_item.dart';
 
 export 'src/reorderable_sliver_grid_view.dart' show ReorderableSliverGridView;
 export 'src/reorderable_wrapper_widget.dart' show ReorderableWrapperWidget;
